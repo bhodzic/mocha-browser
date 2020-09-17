@@ -22,5 +22,13 @@ describe("fact", function () {
             assert.equal(factorial(3), 6);
         });
 
+        it(`4 factorial is 24`, function () {
+            assert.equal(factorial(4), 24);
+        });
+
+        it(`5 factorial is 120`, function () {
+            assert.equal(factorial(5), 120);
+        });
+
     });
 });
