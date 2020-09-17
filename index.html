@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- add mocha css, to show results -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/8.1.3/mocha.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <style>
+    #mocha-stats {
+      position: relative;
+      display: flex;
+      top:0;
+      right:0;
+    }
+  </style>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <!-- add mocha framework code -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/8.1.3/mocha.min.js"></script>
+  <script>
+    mocha.setup('bdd'); // minimal setup
+  </script>
+  <!-- add chai -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.2.0/chai.min.js"></script>
+  <script>
+    // chai has a lot of stuff, let's make assert global
+    let assert = chai.assert;
+  </script>
+</head>
+
+<body>
+
+  <script src="someFunctions.js"></script>
+
+  <!-- the script with tests (describe, it...) -->
+  <script src="test.js"></script>
+
+  <div class="container">
+    <h2>Test function</h2>
+    <form>
+      <div class="form-group">
+        <label for="sel1">Please select function for testing:</label>
+        <select class="form-control" id="sel1">
+          <option value="pow">Power</option>
+          <option value="fact">Factorial</option>
+        </select>
+      </div>
+    </form>
+    <div id="mocha-wrapper"></div>
+  </div>
+
+  <script>
+    $(function () {
+      runTest = (value) => {
+        $('#mocha-wrapper').html('<div id="mocha"></div>');
+        mocha.cleanReferencesAfterRun(false);
+        mocha.fgrep(value);
+        mocha.run();
+      }
+
+      runTest($('#sel1').val());
+
+      $('#sel1').on('change', function (e) {
+        runTest(this.value);
+      });
+
+    });
+  </script>
+</body>
+
+</html>
