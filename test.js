@@ -15,7 +15,7 @@ describe("pow", function () {
     });
 });
 
-describe("fact", function () {
+describe("factorial", function () {
     describe("returns factorial of x", function () {
 
         it(`3 factorial is 6`, function () {

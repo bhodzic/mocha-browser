@@ -6,12 +6,34 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/8.1.3/mocha.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <style>
+    input,
+    select,
+    button {
+      margin-top: 10px !important;
+      margin-bottom: 10px !important;
+      width: 150px !important;
+    }
+
     #mocha-stats {
       position: relative;
       display: flex;
-      top:0;
-      right:0;
+      top: 0;
+      right: 0;
     }
+
+    .inputWrapper {
+      display: flex;
+    }
+
+    .inputWrapper input:not(:first-of-type) {
+      margin-left: 10px;
+    }
+
+    #resultWrapper {
+      text-align: center;
+      width: 150px;
+    }
+
   </style>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -43,11 +65,21 @@
         <label for="sel1">Please select function for testing:</label>
         <select class="form-control" id="sel1">
           <option value="pow">Power</option>
-          <option value="fact">Factorial</option>
+          <option value="factorial">Factorial</option>
+          <option value="palindrome">Palindrome</option>
         </select>
       </div>
     </form>
+
     <div id="mocha-wrapper"></div>
+
+    <div class="mt-4">Please enter the values to test it yourself</div>
+    <div class="inputWrapper">
+      <input id="firstInput" type="text" class="form-control" placeholder="First value" />
+      <input id="secondInput" type="text" class="form-control" placeholder="Second value" />
+    </div>
+    <button id="testBtn" type="button" class="btn btn-success">Test</button>
+    <div id="resultWrapper" class="invisible mt-4">Result</div>
   </div>
 
   <script>
@@ -63,7 +95,28 @@
 
       $('#sel1').on('change', function (e) {
         runTest(this.value);
+        $('#resultWrapper').addClass('invisible');
+        $('#firstInput').val('');
+        $('#secondInput').val('');
+        $('#secondInput').toggleClass('invisible', this.value != 'pow');
       });
+
+      $('#testBtn').on('click', function (e) {
+
+        let functionName = $('#sel1').val();
+        let result;
+        if (functionName == 'pow') {
+          result = pow(parseFloat($('#firstInput').val()), parseFloat($('#secondInput').val()));
+          console.log($('#firstInput').val(), $('#secondInput').val(), result);
+        } else if (functionName == 'factorial') {
+          result = factorial(parseFloat($('#firstInput').val()));
+        } else if (functionName == 'palindrome') {
+          result = palindrome($('#firstInput').val());
+        }
+        $('#resultWrapper').removeClass('invisible').text(`Result is: ${result}`);
+      });
+
+
 
     });
   </script>
